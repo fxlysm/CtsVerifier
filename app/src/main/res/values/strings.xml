@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CtsVerifier Tools</string>
+    <string name="action_settings">Settings</string>
+    <string name="is_inset_earset">Is inset earset?</string>
+</resources>

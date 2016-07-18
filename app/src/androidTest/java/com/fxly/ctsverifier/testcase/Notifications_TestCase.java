@@ -3,9 +3,6 @@ package com.fxly.ctsverifier.testcase;
 /**
  * Created by Lambert Liu on 2016-07-08.
  */
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +14,13 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.Until;
+
 import com.fxly.ctsverifier.Action;
 import com.fxly.ctsverifier.TextStrings;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -56,8 +58,9 @@ public class Notifications_TestCase {
 
 
     @Test
-    public void testcase() {
+    public void CA_Cert_Notification_Test() {
         Action.Sleep(2);
+
 
     }
 

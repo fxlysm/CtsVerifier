@@ -3,9 +3,6 @@ package com.fxly.ctsverifier.testcase;
 /**
  * Created by Lambert Liu on 2016-07-08.
  */
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +15,13 @@ import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.Until;
+
 import com.fxly.ctsverifier.Action;
 import com.fxly.ctsverifier.TextStrings;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -53,9 +55,12 @@ public class Managed_Provisioning_TestCase {
         // Wait for the app to appear
         mDevice.wait(Until.hasObject(By.pkg(TextStrings.PACKAGE).depth(0)), LAUNCH_TIMEOUT);
     }
-
-
-
+    @Test
+    public void BYOD_Managed_Provisioning(){
+        Action.UiTextScrollable("BYOD Managed Provisioning");
+        Action.NoticeConfirm("BYOD Managed Provisioning");
+        
+    }
     @Test
     public void Device_Owner_Provisioning() throws UiObjectNotFoundException {
         Action.UiTextScrollable("Device Owner Provisioning");
@@ -71,7 +76,9 @@ public class Managed_Provisioning_TestCase {
         Action.UiTextScrollable("Device Owner Tests");
         Action.NoticeConfirm("Device Owner Tests");
 
+
     }
+
 
     /**
      * Uses package manager to find the package name of the device launcher. Usually this package

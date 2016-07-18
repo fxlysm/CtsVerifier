@@ -3,9 +3,6 @@ package com.fxly.ctsverifier.testcase;
 /**
  * Created by Lambert Liu on 2016-07-08.
  */
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +13,17 @@ import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
+
 import com.fxly.ctsverifier.Action;
 import com.fxly.ctsverifier.TextStrings;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -28,6 +32,9 @@ import static org.junit.Assert.assertThat;
 @SdkSuppress(minSdkVersion = 18)
 public class Streaming_TestCase {
     private static final int LAUNCH_TIMEOUT = 5000;
+    String Streaming_Video_Quality_Verifier[]={"H263 Video, AMR Audio","MPEG4 SP Video, AAC Audio","H264 Base Video, AAC Audio"
+    ,"H263 Video, AMR Audio","MPEG4 SP Video, AAC Audio","H264 Base Video, AAC Audio"
+    };
     private UiDevice mDevice;
 
     @Before
@@ -57,14 +64,48 @@ public class Streaming_TestCase {
 
 
     @Test
-    public void Streaming_Video_Quality_Verifier() {
+    public void Streaming_Video_Quality_Verifier() throws UiObjectNotFoundException {
         Action.UiTextScrollable("Streaming Video Quality Verifier");
         Action.NoticeConfirm("Streaming Video Quality Verifier");
-        try {
-            Action.Pass_btn_check();
-        } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
+        UiObject notice_text=new UiObject(new UiSelector().text("Streaming Video Quality Verifier"));
+        while (!notice_text.exists()){
+            Action.Sleep(2);
+            if(notice_text.exists()){
+                new UiObject(new UiSelector().text("OK")).click();
+                Action.Sleep(2);
+                break;}
+            else if(new UiObject(new UiSelector().text("RTSP")).exists()){
+                break;
+
+            }
         }
+
+        for(int i=0;i<Streaming_Video_Quality_Verifier.length;i++){
+            if(new UiObject(new UiSelector().text(Streaming_Video_Quality_Verifier[i])).exists()){
+                new UiObject(new UiSelector().text(Streaming_Video_Quality_Verifier[i])).clickAndWaitForNewWindow();
+                Action.Sleep(30);
+                if(new UiObject(new UiSelector().text("Test Failed")).exists()){
+                    Action.UiTextSelector("Close");
+                }else {
+                    UiObject passbtn=new UiObject(new UiSelector().resourceId("com.android.cts.verifier:id/pass_button").description("Pass"));
+                    while (!passbtn.isEnabled()){
+                        Action.Sleep(2);
+                        if(passbtn.isEnabled()){break;}
+                        else if(new UiObject(new UiSelector().text("RTSP")).exists()) {
+                            break;
+                        }
+                        else if(new UiObject(new UiSelector().text("Test Failed")).exists()){
+                            Action.UiTextSelector("Close");  break;
+                        }
+                    }
+                    passbtn.clickAndWaitForNewWindow();
+                    Action.Sleep(2);
+                }
+            }
+
+        }
+        Action.Pass_btn_check();
+
     }
 
 

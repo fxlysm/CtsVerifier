@@ -17,17 +17,52 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <TextView
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:text="@string/is_inset_earset" />
 
         <TextView
             android:id="@+id/is_inset_earset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Hello World!" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorAccent"
+            android:paddingBottom="@dimen/activity_view_margin"
+            android:paddingTop="@dimen/activity_view_margin"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/is_connect_wifi" />
+
+            <TextView
+                android:id="@+id/is_connect_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hello World!" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

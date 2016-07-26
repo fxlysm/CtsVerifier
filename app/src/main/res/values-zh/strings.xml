@@ -3,4 +3,5 @@
     <string name="app_name">CtsVerifier自动化测试工具</string>
     <string name="is_inset_earset">是否插入耳机？</string>
     <string name="action_settings">设置</string>
+    <string name="is_connect_wifi">是否连接WIFI?</string>
 </resources>

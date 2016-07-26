@@ -30,8 +30,15 @@ import static org.junit.Assert.assertThat;
 @SdkSuppress(minSdkVersion = 18)
 public class Managed_Provisioning_TestCase {
     private static final int LAUNCH_TIMEOUT = 5000;
+    String Device_Owner_list[] = {"Device administrator settings", "Disallow configuring WiFi", "Disallow configuring VPN", "Disallow configuring Bluetooth", "Disallow USB file transfer"
+            , "Disable status bar", "Disable keyguard", "Remove device owner"
+    };
+    String WIFI_Configuration_lockdown[] = {"Unlocked config is modifiable in Settings", "Locked config is not modifiable in Settings", "Locked config can be connected to", "Unlocked config can be forgotten in Settings"};
+    String Device_Own_Check[] = {"Check device owner", "Permissions lockdown"};
     private UiDevice mDevice;
 
+    //    Permissions lockdown  Check device owner
+//    "WiFi configuration lockdown",
     @Before
     public void startMainActivityFromHomeScreen() {
         // Initialize UiDevice instance
@@ -59,7 +66,8 @@ public class Managed_Provisioning_TestCase {
     public void BYOD_Managed_Provisioning(){
         Action.UiTextScrollable("BYOD Managed Provisioning");
         Action.NoticeConfirm("BYOD Managed Provisioning");
-        
+
+
     }
     @Test
     public void Device_Owner_Provisioning() throws UiObjectNotFoundException {
@@ -72,14 +80,35 @@ public class Managed_Provisioning_TestCase {
     }
 
     @Test
-    public void Device_Owner_Tests() {
+    public void Device_Owner_Tests() throws UiObjectNotFoundException {
         Action.UiTextScrollable("Device Owner Tests");
         Action.NoticeConfirm("Device Owner Tests");
 
+        //点击部分
+        for (int a = 0; a < Device_Own_Check.length; a++) {
+//            Action.UiTextScrollable(Device_Own_Check[a]);
+            Action.UiTextScrollableListView(Device_Own_Check[a]);
+            Action.Sleep(2);
+        }
+        //子项目部分
+        Action.UiTextScrollableListView("WiFi configuration lockdown");
+        Action.NoticeConfirm("WiFi configuration lockdown");
+        Action.Sleep(2);
+        mDevice.pressBack();
+        Action.Sleep(2);
+        for (int b = 0; b < WIFI_Configuration_lockdown.length; b++) {
+            Action.UiTextScrollableListView(WIFI_Configuration_lockdown[b]);
+            Action.NoticeConfirm(WIFI_Configuration_lockdown[b]);
+            Action.Pass_btn_check();
+        }
 
     }
 
-
+//    UiScrollable noteList = new UiScrollable( new UiSelector().className("android.widget.ListView"));
+//    UiObject note = null;
+//    note = noteList.getChildByText(new UiSelector().className("android.widget.TextView"), "Note1", true);
+//    assertThat(note,notNullValue());
+//    note.longClick();
     /**
      * Uses package manager to find the package name of the device launcher. Usually this package
      * is "com.android.launcher" but can be different at times. This is a generic solution which

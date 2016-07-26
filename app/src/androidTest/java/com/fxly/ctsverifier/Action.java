@@ -1,7 +1,5 @@
 package com.fxly.ctsverifier;
 
-import android.support.test.InstrumentationRegistry;
-import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
@@ -9,7 +7,8 @@ import android.support.test.uiautomator.UiSelector;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by Lambert Liu on 2016-07-08.
@@ -133,6 +132,14 @@ public class Action {
 
     }
 
+    public final static void UiTextScrollableListView(String text) throws UiObjectNotFoundException {
+        UiScrollable testList = new UiScrollable(new UiSelector().className("android.widget.ListView"));
+        UiObject listitem = null;
+        listitem = testList.getChildByText(new UiSelector().className("android.widget.TextView"), text, true);
+        assertThat(listitem, notNullValue());
+        listitem.clickAndWaitForNewWindow();
+        Sleep(2);
+    }
 
     public final static void Pass_btn_check() throws UiObjectNotFoundException {
         UiObject passbtn=new UiObject(new UiSelector().resourceId("com.android.cts.verifier:id/pass_button").description("Pass"));

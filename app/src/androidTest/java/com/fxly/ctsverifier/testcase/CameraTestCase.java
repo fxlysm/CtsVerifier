@@ -16,7 +16,6 @@ import android.support.test.uiautomator.Until;
 import com.fxly.ctsverifier.Action;
 import com.fxly.ctsverifier.TextStrings;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,21 +30,18 @@ public class CameraTestCase {
     private static final int LAUNCH_TIMEOUT = 5000;
 
     private static final String STRING_TO_BE_TYPED = "UiAutomator";
-
-    private UiDevice mDevice;
-
     String CAMERA_FORMATS[]={"Camera 0","Camera 1"};
     String CAMERA_FORMATS_resolution[]={"176 x 144","240 x 320","320 x 240","352 x 288","480 x 320","480 x 368","480 x 640","640 x 480","720 x 480","800 x 480","800 x 600","864 x 480",
             "960 x 540","1024 x 768","1280 x 720","1280 x 736","1280 x 768","1280 x 960","1440 x 1080","1600 x 1200","1670 x 1252","1920 x 1080","1920 x 1088","2048 x 1536",
             "2560 x 1440","2560 x 1920"};
-
     String CAMERA_FORMATS_resolution_1[]={"" +
             "176 x 144","320 x 240","352 x 288","480 x 320","480 x 368","640 x 480","720 x 480","800 x 480",
             "800 x 600","864 x 480","960 x 540","1024 x 768","1280 x 720","1280 x 736","1280 x 768","1280 x 960",
             "1600 x 1200","1920 x 1080","1920 x 1088"};
     String CAMERA_FORMATS_TYPE[]={"NV21","YV12"};
-
     String CAMERA_VIDEO_TYPE[]={"LOW","HIGH","QCIF","QVGA","CIF","480P","720P","1080P"};
+    private UiDevice mDevice;
+
     @Before
     public void startMainActivityFromHomeScreen() {
         // Initialize UiDevice instance
@@ -79,10 +75,13 @@ public class CameraTestCase {
         Action.Sleep(2);
         while (new UiObject(new UiSelector().text("Tap to calibrate")).exists()){
             mDevice.click(mDevice.getDisplayWidth()/2,mDevice.getDisplayHeight()/2);
-            Action.Sleep(2);
+            Action.Sleep(3);
             Action.UiTextSelector("Done");
             Action.Sleep(2);
 //            break;
+            if (!new UiObject(new UiSelector().text("Tap to calibrate")).exists()) {
+                break;
+            }
         }
 
 

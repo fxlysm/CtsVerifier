@@ -102,7 +102,6 @@ public class Streaming_TestCase {
                     Action.Sleep(2);
                 }
             }
-
         }
         Action.Pass_btn_check();
 

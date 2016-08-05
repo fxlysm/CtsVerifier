@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
@@ -19,9 +20,6 @@ import com.fxly.ctsverifier.TextStrings;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
 /**
  * Created by Lambert Liu on 2016-07-08.
  */
@@ -31,7 +29,7 @@ public class CameraTestCase {
 
     private static final String STRING_TO_BE_TYPED = "UiAutomator";
     String CAMERA_FORMATS[]={"Camera 0","Camera 1"};
-    String CAMERA_FORMATS_resolution[]={"176 x 144","240 x 320","320 x 240","352 x 288","480 x 320","480 x 368","480 x 640","640 x 480","720 x 480","800 x 480","800 x 600","864 x 480",
+    String CAMERA_FORMATS_resolution[] = {"176 x 144", "240 x 320", "320 x 240", "352 x 288", "480 x 320", "480 x 368", "480 x 640", "624 x 352", "640 x 480", "720 x 480", "800 x 480", "800 x 600", "864 x 480",
             "960 x 540","1024 x 768","1280 x 720","1280 x 736","1280 x 768","1280 x 960","1440 x 1080","1600 x 1200","1670 x 1252","1920 x 1080","1920 x 1088","2048 x 1536",
             "2560 x 1440","2560 x 1920"};
     String CAMERA_FORMATS_resolution_1[]={"" +
@@ -52,7 +50,7 @@ public class CameraTestCase {
 
         // Wait for launcher
         final String launcherPackage = getLauncherPackageName();
-        assertThat(launcherPackage, notNullValue());
+        //      assertThat(launcherPackage, notNullValue());
         mDevice.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT);
 
         // Launch the blueprint app
@@ -75,7 +73,7 @@ public class CameraTestCase {
         Action.Sleep(2);
         while (new UiObject(new UiSelector().text("Tap to calibrate")).exists()){
             mDevice.click(mDevice.getDisplayWidth()/2,mDevice.getDisplayHeight()/2);
-            Action.Sleep(3);
+            Action.Sleep(5);
             Action.UiTextSelector("Done");
             Action.Sleep(2);
 //            break;
@@ -185,84 +183,92 @@ public class CameraTestCase {
         mDevice.pressHome();
         Action.Sleep(2);
 
-        if(new UiObject(new UiSelector().description("Camera")).exists() ){
-            new UiObject(new UiSelector().description("Camera")).clickAndWaitForNewWindow();
-        }else {
-            new UiObject(new UiSelector().description("Apps")).clickAndWaitForNewWindow();
+        if (Build.MODEL.equals("Wileyfox*")) {
+
+
+        } else {
+            if (new UiObject(new UiSelector().description("Camera")).exists()) {
+                new UiObject(new UiSelector().description("Camera")).clickAndWaitForNewWindow();
+            } else {
+                new UiObject(new UiSelector().description("Apps")).clickAndWaitForNewWindow();
+                Action.Sleep(2);
+                UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
+                appViews.setAsHorizontalList();
+                appViews.scrollForward();
+                //通过类名和Text找到联系人应用图标，Text获取通过uiautomatorviewer
+                UiObject findcamera = appViews.getChildByText(new UiSelector().className(android.widget.TextView.class.getName()), "Camera");
+                //点击并等待打开短信应用
+                findcamera.clickAndWaitForNewWindow();
+                Action.Sleep(2);
+            }
             Action.Sleep(2);
+            new UiObject(new UiSelector().description("Shutter button").resourceId("com.mediatek.camera:id/shutter_button_photo")).click();
+
+            Action.Sleep(2);
+            mDevice.pressBack();
+            Action.Sleep(2);
+
+            UiObject handleView = new UiObject(new UiSelector().descriptionContains("Apps"));
+            //	UiObject appList = new UiObject(new UiSelector().text(applist[j]));
+            handleView.clickAndWaitForNewWindow();
+            Action.Sleep(2);
+
             UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
             appViews.setAsHorizontalList();
             appViews.scrollForward();
-            //通过类名和Text找到联系人应用图标，Text获取通过uiautomatorviewer
-            UiObject findcamera = appViews.getChildByText(new UiSelector().className(android.widget.TextView.class.getName()), "Camera");
-            //点击并等待打开短信应用
-            findcamera.clickAndWaitForNewWindow();
+
+            //通过类名和Text找到Calendar应用图标，Text获取通过uiautomatorviewer
+            UiObject Verifierapp = appViews.getChildByText(new UiSelector().className(android.widget.TextView.class.getName()), "CTS Verifier");
+            //点击并等待打开Calendar应用
+            Verifierapp.clickAndWaitForNewWindow();
             Action.Sleep(2);
-        }
-        Action.Sleep(2);
-        new UiObject(new UiSelector().description("Shutter button").resourceId("com.mediatek.camera:id/shutter_button_photo")).click();
+            Action.Pass_btn_check();
 
-        Action.Sleep(2);
-        mDevice.pressBack();
-        Action.Sleep(2);
-
-        UiObject handleView = new UiObject(new UiSelector().descriptionContains("Apps"));
-        //	UiObject appList = new UiObject(new UiSelector().text(applist[j]));
-        handleView.clickAndWaitForNewWindow();
-        Action.Sleep(2);
-
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
-        appViews.setAsHorizontalList();
-        appViews.scrollForward();
-
-        //通过类名和Text找到Calendar应用图标，Text获取通过uiautomatorviewer
-        UiObject Verifierapp = appViews.getChildByText(new UiSelector().className(android.widget.TextView.class.getName()), "CTS Verifier");
-        //点击并等待打开Calendar应用
-        Verifierapp.clickAndWaitForNewWindow();
-        Action.Sleep(2);
-        Action.Pass_btn_check();
-
-        Action.UiTextSelector("Start Test");
-        mDevice.pressHome();
-        Action.Sleep(2);
-        new UiObject(new UiSelector().description("Camera")).clickAndWaitForNewWindow();
-        Action.Sleep(2);
-      UiObject record_btn=  new UiObject(new UiSelector().description("Video shutter button").resourceId("com.mediatek.camera:id/shutter_button_video"));
+            Action.UiTextSelector("Start Test");
+            mDevice.pressHome();
+            Action.Sleep(2);
+            new UiObject(new UiSelector().description("Camera")).clickAndWaitForNewWindow();
+            Action.Sleep(2);
+            UiObject record_btn = new UiObject(new UiSelector().description("Video shutter button").resourceId("com.mediatek.camera:id/shutter_button_video"));
 //        mDevice.drag(record_btn.getBounds().centerX(),record_btn.getBounds().centerY(),record_btn.getBounds().centerX(),record_btn.getBounds().centerY(),100);
-        record_btn.click();
-        Action.Sleep(5);
-        record_btn.click();
-        Action.Sleep(5);
-        mDevice.pressBack();
-        mDevice.pressHome();
+            record_btn.click();
+            Action.Sleep(5);
+            record_btn.click();
+            Action.Sleep(5);
+            mDevice.pressBack();
+            mDevice.pressHome();
 
 
-        //	UiObject appList = new UiObject(new UiSelector().text(applist[j]));
-        handleView.clickAndWaitForNewWindow();
-        Action.Sleep(2);
+            //	UiObject appList = new UiObject(new UiSelector().text(applist[j]));
+            handleView.clickAndWaitForNewWindow();
+            Action.Sleep(2);
 
 
-        appViews.setAsHorizontalList();
-        appViews.scrollForward();
+            appViews.setAsHorizontalList();
+            appViews.scrollForward();
 
-        //通过类名和Text找到Calendar应用图标，Text获取通过uiautomatorviewer
-        Verifierapp.clickAndWaitForNewWindow();
-        Action.Sleep(2);
-        Action.Pass_btn_check();
-        Action.UiTextSelector("Start Test");
-        new UiObject(new UiSelector().description("Shutter button").resourceId("com.mediatek.camera:id/shutter_button_photo")).click();
-        Action.Sleep(2);
-        mDevice.pressBack();
-        Action.Sleep(2);
-        Action.Pass_btn_check();
-        Action.UiTextSelector("Start Test");
-        record_btn.click();
-        Action.Sleep(5);
-        record_btn.click();
-        Action.Sleep(5);
-        mDevice.pressBack();
-        Action.Sleep(2);
-        Action.Pass_btn_check();
+            //通过类名和Text找到Calendar应用图标，Text获取通过uiautomatorviewer
+            Verifierapp.clickAndWaitForNewWindow();
+            Action.Sleep(2);
+            Action.Pass_btn_check();
+            Action.UiTextSelector("Start Test");
+            new UiObject(new UiSelector().description("Shutter button").resourceId("com.mediatek.camera:id/shutter_button_photo")).click();
+            Action.Sleep(2);
+            mDevice.pressBack();
+            Action.Sleep(2);
+            Action.Pass_btn_check();
+            Action.UiTextSelector("Start Test");
+            record_btn.click();
+            Action.Sleep(5);
+            record_btn.click();
+            Action.Sleep(5);
+            mDevice.pressBack();
+            Action.Sleep(2);
+            Action.Pass_btn_check();
+        }
+
+
+
 
     }
     @Test

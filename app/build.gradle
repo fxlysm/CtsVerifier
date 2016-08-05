@@ -36,6 +36,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
+    //SnackBar
+    compile 'com.github.mrengineer13:snackbar:1.2.0'
     androidTestCompile 'com.android.support:support-annotations:24.0.0'
     androidTestCompile 'com.android.support.test:runner:0.4.1'
     // UiAutomator Testing

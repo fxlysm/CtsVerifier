@@ -3,16 +3,11 @@ package com.fxly.ctsverifier.testcase;
 /**
  * Created by Lambert Liu on 2016-07-08.
  */
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.provider.Settings;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
@@ -23,28 +18,29 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
-import android.widget.Toast;
 
 import com.fxly.ctsverifier.Action;
 import com.fxly.ctsverifier.R;
 import com.fxly.ctsverifier.TextStrings;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 public class AudioTestCase {
     private static final int LAUNCH_TIMEOUT = 5000;
-    private UiDevice mDevice;
     String Audio_testitem[]={"Audio Input Devices Notifications Test","Audio Input Routing Notifications Test","Audio Output Devices Notifications Test","Audio Output Routing Notifications Test"};
+    private UiDevice mDevice;
 
     @Before
     public void startMainActivityFromHomeScreen() {
@@ -111,6 +107,18 @@ public class AudioTestCase {
 
     }
 
+
+    //Hifi Ultrasound Speaker Test
+    @Test
+    public void Hifi_Ultrasound_Speaker_Test() throws UiObjectNotFoundException {
+        Action.UiTextSelector("Hifi Ultrasound Speaker Test");
+        Action.NoticeConfirm("Hifi Ultrasound Speaker Test");
+        Action.UiTextSelector("PLAY");
+        Action.Sleep(2);
+        Action.UiTextSelector("OK");
+        Action.Sleep(2);
+        Action.Pass_btn_check();
+    }
 
 
     public void check_headset() throws UiObjectNotFoundException{

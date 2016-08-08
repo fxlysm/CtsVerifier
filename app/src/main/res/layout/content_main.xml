@@ -92,6 +92,35 @@
 
                 android:text="Hello World!" />
         </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorAccent"
+            android:paddingBottom="@dimen/activity_view_margin"
+            android:paddingTop="@dimen/activity_view_margin"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/device_platform" />
+
+            <TextView
+                android:id="@+id/device_platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:text="Hello World!" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

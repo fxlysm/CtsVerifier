@@ -117,6 +117,11 @@ public class AudioTestCase {
         Action.Sleep(2);
         Action.UiTextSelector("OK");
         Action.Sleep(2);
+        if (new UiObject(new UiSelector().text("Hifi Ultrasound Speaker Test")).exists()) {
+            mDevice.pressBack();
+            Action.Sleep(2);
+        }
+        Action.Sleep(2);
         Action.Pass_btn_check();
     }
 

@@ -4,6 +4,7 @@
     <string name="is_inset_earset">Is inset earset?</string>
     <string name="is_connect_wifi">Is connect the WIFI ?</string>
     <string name="Software_build">Device Model</string>
+    <string name="device_platform">Platform</string>
     <string name="clear">Clear</string>
     <string name="test_results_cleared">Test results cleared.</string>
     <string name="view">View</string>

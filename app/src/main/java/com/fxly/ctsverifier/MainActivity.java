@@ -24,7 +24,7 @@ import com.github.mrengineer13.snackbar.SnackBar;
 
 
 public class MainActivity extends AppCompatActivity {
-    TextView is_inset_earset, is_connect_wifi, device_model;
+    TextView is_inset_earset, is_connect_wifi, device_model, device_platform;
     private SnackBar mSnackBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         is_inset_earset=(TextView)findViewById(R.id.is_inset_earset);
         is_connect_wifi = (TextView) findViewById(R.id.is_connect_wifi);
         device_model = (TextView) findViewById(R.id.device_build_version);
-
+        device_platform = (TextView) findViewById(R.id.device_platform);
+        device_platform.setText(Build.HARDWARE);
         setSupportActionBar(toolbar);
         AudioManager localAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
